@@ -10,9 +10,9 @@ RSpec.describe Ride do
   describe 'model methods' do
     before do
       @park = AmusementPark.create!(name: 'Park 1', cost_of_admission: 50)
-      @ride1 = @park.rides.create!(name: 'Ride 1', thrill_rating: 1, open: true)
-      @ride2 = @park.rides.create!(name: 'Ride 2', thrill_rating: 2, open: true)
-      @ride3 = @park.rides.create!(name: 'Ride 3', thrill_rating: 3, open: false)
+      @ride1 = @park.rides.create!(name: 'Ride B', thrill_rating: 1, open: true)
+      @ride2 = @park.rides.create!(name: 'Ride A', thrill_rating: 2, open: true)
+      @ride3 = @park.rides.create!(name: 'Ride C', thrill_rating: 3, open: false)
       @mechanic1 = Mechanic.create!(name: 'Mechanic 1', years_experience: 1)
       @mechanic2 = Mechanic.create!(name: 'Mechanic 2', years_experience: 2)
       @mechanic3 = Mechanic.create!(name: 'Mechanic 3', years_experience: 3)
@@ -23,6 +23,14 @@ RSpec.describe Ride do
 
     it 'orders rides by thrill rating descending' do
       expect(Ride.order_by_rating_descending).to eq([@ride3, @ride2, @ride1])
+    end
+
+    it 'orders alphabetically by name' do
+      expect(Ride.order_alphabetical).to eq([@ride2, @ride1, @ride3])
+    end
+
+    it 'averages thrill rating' do
+      expect(Ride.average_thrill_rating).to eq(2)
     end
   end
 end
