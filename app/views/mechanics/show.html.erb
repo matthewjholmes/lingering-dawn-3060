@@ -1,0 +1,10 @@
+<h1>Mechanic <%= @mechanic.name %></h1>
+
+<p>Years of experience: <%= @mechanic.years_experience%></p>
+
+<h3>Open rides that <%= @mechanic.name %> works on:</h3>
+<% @mechanic.rides.order_by_rating_descending.each do |ride| %>
+  <% if ride.open %>
+    <%= ride.name %>
+  <% end %>
+<% end %>

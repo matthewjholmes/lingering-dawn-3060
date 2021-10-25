@@ -21,11 +21,7 @@ RSpec.describe Ride do
       @mechanic_ride3 = MechanicRide.create!(mechanic_id: @mechanic3.id, ride_id: @ride3.id)
     end
 
-    it 'returns only open rides' do
-      expect(Ride.open_rides).to eq([@ride1, @ride2])
-    end
-
-    it 'orders by thrill rating descending' do
+    it 'orders rides by thrill rating descending' do
       expect(Ride.order_by_rating_descending).to eq([@ride3, @ride2, @ride1])
     end
   end
