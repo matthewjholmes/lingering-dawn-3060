@@ -7,6 +7,7 @@ RSpec.describe 'mechanic show page' do
       @ride1 = @park.rides.create!(name: 'Ride 1', thrill_rating: 1, open: true)
       @ride2 = @park.rides.create!(name: 'Ride 2', thrill_rating: 2, open: true)
       @ride3 = @park.rides.create!(name: 'Ride 3', thrill_rating: 3, open: false)
+      @ride4 = @park.rides.create!(name: 'Ride 4', thrill_rating: 4, open: true)
       @mechanic = Mechanic.create!(name: 'Mechanic 1', years_experience: 1)
       @mechanic_ride1 = MechanicRide.create!(mechanic_id: @mechanic.id, ride_id: @ride1.id)
       @mechanic_ride2 = MechanicRide.create!(mechanic_id: @mechanic.id, ride_id: @ride2.id)
@@ -28,6 +29,20 @@ RSpec.describe 'mechanic show page' do
 
     it 'rides are listed by rating descending' do
       expect(@ride2.name).to appear_before(@ride1.name)
+    end
+
+    context 'i see a form to add a ride to mech' do
+      it 'has form title' do
+        expect(page).to have_content("Add a ride to this mechanic's workload")
+      end
+
+      it 'i fill out form with new ride id, submit, and am redirected back to mech show page with new ride listed' do
+        fill_in :ride_id, with: @ride4.id
+        click_button 'Add Ride'
+
+        expect(current_path).to eq(mechanic_path(@mechanic))
+        expect(page).to have_content(@ride4.name)
+      end
     end
   end
 end
